@@ -1,0 +1,56 @@
+services:
+
+  # ── MongoDB ────────────────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  # ── PostgreSQL ─────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: orderdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  # ── Book Service ───────────────────────────────────────────────────────────
+  book-service:
+    build:
+      context: ./book_service
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      MONGO_URL: mongodb://mongo:27017
+      MONGO_DB: bookstore
+    depends_on:
+      - mongo
+
+  # ── Order Service ──────────────────────────────────────────────────────────
+  order-service:
+    build:
+      context: ./order_service
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@postgres:5432/orderdb
+      BOOK_SERVICE_URL: http://book-service:8000
+    depends_on:
+      - postgres
+      - book-service
+
+volumes:
+  mongo_data:
+  pg_data:

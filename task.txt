@@ -1,0 +1,45 @@
+Simple Project: Book Store (Python + FastAPI)  
+  
+It has only 2 tiny services and about 6 files each.  
+  
+Book Service (MongoDB): add books, list books, keep stock count.  
+Order Service (PostgreSQL): buy a book and see order history.  
+Build it in 5 steps  
+Book Service: write 3 endpoints: add book, list books, reduce stock.  
+Order Service: write 2 endpoints: place order and get my orders. When an order is placed, it calls the Book Service to check and reduce stock.  
+Add the design parts:  
+A discount class (Strategy): NoDiscount, TenPercentDiscount.  
+A payment maker (Factory): returns UPI or Card payment.  
+Keep route, service and database code in separate files.  
+Add the database parts:  
+Wrap "save order + reduce stock" in one transaction.  
+Add an index on user_id, run EXPLAIN before and after, and write down the time difference.  
+Add the tools:  
+A Dockerfile for each service and one docker-compose.yml.  
+A Jenkins pipeline with 3 steps: install, run pytest, build the Docker image.  
+Skill checklist  
+Skill	Done by  
+Functional Programming	map, filter and sum to calculate the order total  
+Competitive Programming	50+ LeetCode problems, with your profile link on the resume  
+SOLID	Separate files and an ABC for discounts  
+Design Patterns	Strategy and Factory  
+Microservices	Order Service calls Book Service  
+Transactions	One transaction for order and stock  
+Query Optimization	Index and EXPLAIN  
+NoSQL	MongoDB for books  
+Docker	Dockerfiles and compose file  
+Jenkins	3-step pipeline  
+Build Tools	pyproject.toml and a Makefile  
+IntelliJ / Eclipse	Use PyCharm or IntelliJ, and try Eclipse once  
+Cross-functional	1 friend, GitHub pull requests  
+Client Communication	A friend acts as the client, you demo, and you write down their feedback  
+  
+Not covered: Maven and Gradle only work with Java or Kotlin. Don't claim them for this project.  
+  
+Resume lines  
+Built 2 Python FastAPI microservices (PostgreSQL and MongoDB) deployed with Docker Compose.  
+Used a database transaction to keep orders and stock consistent.  
+Added an index to speed up order history queries, checked with EXPLAIN.  
+Applied Strategy and Factory patterns with SOLID principles.  
+Created a Jenkins pipeline for automatic tests and Docker builds.  
+Collected client demo feedback and improved the project.
